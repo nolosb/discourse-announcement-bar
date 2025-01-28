@@ -28,7 +28,7 @@ export default class AnnouncementBar extends Component {
           </div>
           <div class='announcement-bar__close'>
             <a {{on 'click' this.closeBanner}}>
-              {{icon 'times'}}
+              {{icon 'xmark'}}
             </a>
           </div>
         </div>
