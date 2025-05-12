@@ -13,6 +13,14 @@ button_link:
   default: "/"
   description:
     en: "Button Link for the announcement bar."
+button_target:
+  default: "_blank"
+  type: enum
+  choices:
+    - _blank
+    - _self
+  description:
+    en: "Blank opens the link in a new window or tab, self opens it in the same tab."
 update_version:
   type: string
   default: "20231115"

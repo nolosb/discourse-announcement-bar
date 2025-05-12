@@ -24,7 +24,9 @@ export default class AnnouncementBar extends Component {
             <a
               class='btn btn-primary'
               href='{{settings.button_link}}'
-            >{{settings.button_text}}</a>
+              target='{{settings.button_target}}'
+            >{{settings.button_text}}
+            </a>
           </div>
           <div class='announcement-bar__close'>
             <a {{on 'click' this.closeBanner}}>
