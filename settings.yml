@@ -1,31 +1,12 @@
-bar_text:
-  type: string
-  default: "Exciting news and opportunities!"
-  description:
-    en: "Text for the announcement bar."
-button_text:
-  type: string
-  default: "Learn more"
-  description:
-    en: "Button text for the announcement bar."
 button_link:
   type: string
   default: "/"
-  description:
-    en: "Button Link for the announcement bar."
 button_target:
   default: "_blank"
   type: enum
   choices:
     - _blank
     - _self
-  description:
-    en: "Blank opens the link in a new window or tab, self opens it in the same tab."
-update_version:
-  type: string
-  default: "20231115"
-  description:
-    en: "Increase this version if you want to make the announcement bar re-appear for users that closed it."
 show_on:
   default: "everywhere"
   type: enum

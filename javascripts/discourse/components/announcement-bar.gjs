@@ -3,33 +3,45 @@ import { tracked } from '@glimmer/tracking';
 import { on } from '@ember/modifier';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { htmlSafe } from '@ember/template';
-import cookie, { removeCookie } from 'discourse/lib/cookie';
 import { defaultHomepage } from 'discourse/lib/utilities';
 import icon from 'discourse-common/helpers/d-icon';
+import i18n from 'discourse-common/helpers/i18n';
+import I18n from 'discourse-i18n';
 import and from 'truth-helpers/helpers/and';
 
 export default class AnnouncementBar extends Component {
   @service site;
   @service siteSettings;
   @service router;
-  @tracked closed = false;
+  @service keyValueStore;
+  @tracked dismissed = false;
+
+  get storageKey() {
+    return `announcement-bar-dismissed-${I18n.t(themePrefix("announcement_bar.text"))}`;
+  }
+
+  get isVisible() {
+    if (this.dismissed) {
+      return false;
+    }
+    return !this.keyValueStore.get(this.storageKey);
+  }
 
   <template>
-    {{#if (and this.showOnRoute this.showOnMobile this.cookieState)}}
+    {{#if (and this.showOnRoute this.showOnMobile this.isVisible)}}
       <div class='announcement-bar__wrapper {{settings.plugin_outlet}}'>
         <div class='announcement-bar__container'>
           <div class='announcement-bar__content'>
-            <span>{{htmlSafe settings.bar_text}}</span>
+            <span>{{i18n (themePrefix "announcement_bar.text")}}</span>
             <a
               class='btn btn-primary'
               href='{{settings.button_link}}'
               target='{{settings.button_target}}'
-            >{{settings.button_text}}
+            >{{i18n (themePrefix "announcement_bar.button")}}
             </a>
           </div>
           <div class='announcement-bar__close'>
-            <a {{on 'click' this.closeBanner}}>
+            <a {{on 'click' this.dismiss}}>
               {{icon 'xmark'}}
             </a>
           </div>
@@ -62,30 +74,9 @@ export default class AnnouncementBar extends Component {
     }
   }
 
-  get cookieExpirationDate() {
-    return moment().add(1, 'year').toDate();
-  }
-
-  get cookieState() {
-    const closed_cookie = cookie('discourse_announcement_bar_closed');
-    if (closed_cookie) {
-      const cookieValue = JSON.parse(closed_cookie);
-      if (cookieValue.name !== settings.update_version) {
-        removeCookie('discourse_announcement_bar_closed', { path: '/' });
-      } else {
-        this.closed = true;
-      }
-    }
-    return !this.closed;
-  }
-
   @action
-  closeBanner() {
-    this.closed = true;
-    const bannerState = { name: settings.update_version, closed: 'true' };
-    cookie('discourse_announcement_bar_closed', JSON.stringify(bannerState), {
-      expires: this.cookieExpirationDate,
-      path: '/',
-    });
+  dismiss() {
+    this.keyValueStore.set({ key: this.storageKey, value: 'true' });
+    this.dismissed = true;
   }
 }

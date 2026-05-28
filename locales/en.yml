@@ -1,5 +1,12 @@
 en:
   theme_metadata:
-    description: "Display an announcement bar."
+    description: "Display a dismissible announcement bar. Changing the text automatically re-shows the bar for all users."
     settings:
-      plugin_outlet: "Plugin outlet that this component appears in. Try <code>above-site-header</code> or <code>below-site-header</code>,  you can find more outlets with the <a href='https://meta.discourse.org/t/plugin-outlet-locations-theme-component/100673'>plugin outlet location theme component</a>"
+      button_link: "Button link for the announcement bar."
+      button_target: "Blank opens the link in a new window or tab, self opens it in the same tab."
+      show_on: "Where to show the announcement bar."
+      plugin_outlet: "Plugin outlet that this component appears in."
+      hide_on_mobile: "Hide the announcement bar on mobile devices."
+  announcement_bar:
+    text: "Exciting news and opportunities!"
+    button: "Learn more"
