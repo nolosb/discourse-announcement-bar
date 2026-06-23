@@ -10,3 +10,4 @@ en:
   announcement_bar:
     text: "Exciting news and opportunities!"
     button: "Learn more"
+    close: "Dismiss announcement"
